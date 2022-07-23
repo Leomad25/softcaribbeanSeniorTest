@@ -23,17 +23,18 @@ public class MessageStoreApplication {
 		// Local Database
 		MessageStoreApplication.localDatabase = new LocalDatabase();
 
-		/*
+		/**
 		 * ===================================
 		 *  Datos de prueba para arbol B plus
 		 * ===================================
 		 */
+		/*
 		ArrayList<Long> cedulas = new ArrayList<>();
 		long topNum = 0;
 		for (int i = 0; i < 6000; i++) {
 			long cc = 1L;
 			for (int j = 0 ; j < 60; j++) {
-				int multi = (int)Math.floor(Math.random() * 10);
+				int multi = Math.abs((int)Math.floor(Math.random() * 10));
 				if (multi != 0) cc *= multi;
 			}
 			cc = Math.abs(cc);
@@ -53,16 +54,17 @@ public class MessageStoreApplication {
 				}
 			}
 		}
-		System.out.println("Number Top => " + topNum);
+		//System.out.println("Number Top => " + topNum);
 		for (int i = 0; i < cedulas.size(); i++) {
-			UserModel user = new UserModel(cedulas.get(i).longValue(), "Nombre " + i, "Apellido" + i);
+			UserModel user = new UserModel(cedulas.get(i).longValue(), "Nombre " + i, "Apellido " + i);
 			MessageStoreApplication.bPlusTreeUser.insert(user.getCedula(), user);
 		}
-		/*
 		MessageStoreApplication.bPlusTreeUser.search(0L, topNum).forEach((e) -> {
 			System.out.println(e.getCedula());
 		});
 		 */
-		MessageStoreApplication.localDatabase.getUserTable().update(MessageStoreApplication.bPlusTreeUser.search(Long.MIN_VALUE, Long.MAX_VALUE));
+		//MessageStoreApplication.localDatabase.getUserTable().update(MessageStoreApplication.bPlusTreeUser.search(Long.MIN_VALUE, Long.MAX_VALUE));
+		ArrayList<UserModel> listLocalDatabase = MessageStoreApplication.localDatabase.getUserTable().getList(new UserModel());
+		listLocalDatabase.forEach((e) -> { System.out.println(e.getCedula() + ", " + e.getNombre() + " " + e.getApellido()); });
 	}
 }

@@ -5,10 +5,9 @@ import com.leomad25.messageStore.models.MessageModel;
 import com.leomad25.messageStore.models.UserModel;
 import com.leomad25.messageStore.repositories.LocalDatabaseModel;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class LocalDatabase {
     // < - Panel_of_tables - >
@@ -53,7 +52,9 @@ public class LocalDatabase {
             try {
                 if (!(info.exists())) if (!(info.createNewFile())) { info = null; } else {
                     String contentInfo =
-                            "itemsCount:0";
+                            "itemsCount:0" + "\n" +
+                            "minItemId:0" + "\n" +
+                            "maxItemId:0";
                     FileWriter write = new FileWriter(info);
                     write.write(contentInfo);
                     write.close();
@@ -64,21 +65,64 @@ public class LocalDatabase {
             }
         }
 
-        public ArrayList<T> getList() {
+        public ArrayList<T> getList(T newModel) {
             ArrayList<T> arr = new ArrayList<>();
             if (info != null && data != null) {
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new FileReader(data));
+                    String line;
+                    while ((line = bufferedReader.readLine ()) != null) {
+                        if (line.length() == 0) continue;
+                        newModel = (T) newModel.setOfDatabase(line);
+                        arr.add(newModel);
+                    }
+                    bufferedReader.close();
+                } catch (Exception ex) {
+                    System.err.println("Error (Read into local database):\n" + ex);
+                }
 
             }
             return arr;
         }
 
-        public boolean update(ArrayList<T> items) {
+        public void update(ArrayList<T> items) {
             if (info != null && data != null) {
-                items.forEach((e) -> {
-                    System.out.println(e.getLocalDBString());
-                });
+                try {
+                    // Write on Data File
+                    BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(data));
+                    int itemsCount = 0;
+                    long minValue = 0, maxValue = 0;
+                    for (T item: items) {
+                        bufferedWriter.write(item.getLocalDBString());
+                        bufferedWriter.newLine();
+                        itemsCount++;
+                        if (minValue > item.getIdentifier()) minValue = item.getIdentifier();
+                        if (maxValue < item.getIdentifier()) maxValue = item.getIdentifier();
+                    }
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    // Read Info File
+                    BufferedReader bufferedReader = new BufferedReader(new FileReader(info));
+                    String line;
+                    ArrayList<String[]> listSplit = new ArrayList<>();
+                    while ((line = bufferedReader.readLine ()) != null) {
+                        listSplit.add(line.split(":"));
+                    }
+                    bufferedReader.close();
+                    // Write on Info File
+                    bufferedWriter = new BufferedWriter(new FileWriter(info));
+                    for (int i = 0; i < listSplit.size(); i++) {
+                        if (i != 0) bufferedWriter.newLine();
+                        if (listSplit.get(i)[0].equals("itemsCount")) bufferedWriter.write("itemsCount:" + itemsCount);
+                        if (listSplit.get(i)[0].equals("minItemId")) bufferedWriter.write("minItemId:" + minValue);
+                        if (listSplit.get(i)[0].equals("maxItemId")) bufferedWriter.write("maxItemId:" + maxValue);
+                    }
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                } catch (IOException ex) {
+                    System.err.println("Error (Writing into local database):\n" + ex);
+                }
             }
-            return false;
         }
     }
 }
