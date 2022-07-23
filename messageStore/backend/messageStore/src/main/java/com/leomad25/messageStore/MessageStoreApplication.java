@@ -23,7 +23,11 @@ public class MessageStoreApplication {
 		// Local Database
 		MessageStoreApplication.localDatabase = new LocalDatabase();
 
-		//  Datos de prueba para arbol B plus
+		/*
+		 * ===================================
+		 *  Datos de prueba para arbol B plus
+		 * ===================================
+		 */
 		ArrayList<Long> cedulas = new ArrayList<>();
 		long topNum = 0;
 		for (int i = 0; i < 6000; i++) {
@@ -54,9 +58,11 @@ public class MessageStoreApplication {
 			UserModel user = new UserModel(cedulas.get(i).longValue(), "Nombre " + i, "Apellido" + i);
 			MessageStoreApplication.bPlusTreeUser.insert(user.getCedula(), user);
 		}
-
+		/*
 		MessageStoreApplication.bPlusTreeUser.search(0L, topNum).forEach((e) -> {
 			System.out.println(e.getCedula());
 		});
+		 */
+		MessageStoreApplication.localDatabase.getUserTable().update(MessageStoreApplication.bPlusTreeUser.search(Long.MIN_VALUE, Long.MAX_VALUE));
 	}
 }

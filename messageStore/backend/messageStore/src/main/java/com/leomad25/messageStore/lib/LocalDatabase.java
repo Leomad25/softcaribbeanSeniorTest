@@ -1,7 +1,9 @@
 package com.leomad25.messageStore.lib;
 
+import com.leomad25.messageStore.MessageStoreApplication;
 import com.leomad25.messageStore.models.MessageModel;
 import com.leomad25.messageStore.models.UserModel;
+import com.leomad25.messageStore.repositories.LocalDatabaseModel;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -30,7 +32,7 @@ public class LocalDatabase {
     }
     // < - Panel_of_tables - >
 
-    public class Table<T> {
+    public class Table<T extends LocalDatabaseModel> {
         private final String extName = ".local-db";
         private File tableFolder, data, info;
 
@@ -51,8 +53,7 @@ public class LocalDatabase {
             try {
                 if (!(info.exists())) if (!(info.createNewFile())) { info = null; } else {
                     String contentInfo =
-                            "itemsCount:0\n" +
-                            "lastId:0";
+                            "itemsCount:0";
                     FileWriter write = new FileWriter(info);
                     write.write(contentInfo);
                     write.close();
@@ -63,37 +64,19 @@ public class LocalDatabase {
             }
         }
 
-        public T select(String key) {
+        public ArrayList<T> getList() {
+            ArrayList<T> arr = new ArrayList<>();
             if (info != null && data != null) {
 
             }
-            return null;
+            return arr;
         }
 
-        public ArrayList<T> selectAll() {
+        public boolean update(ArrayList<T> items) {
             if (info != null && data != null) {
-
-            }
-            return null;
-        }
-
-        public boolean insert(T item) {
-            if (info != null && data != null) {
-                System.out.println("insert element: " + item.toString());
-            }
-            return false;
-        }
-
-        public boolean update(T item) {
-            if (info != null && data != null) {
-
-            }
-            return false;
-        }
-
-        public boolean delete(String key) {
-            if (info != null && data != null) {
-
+                items.forEach((e) -> {
+                    System.out.println(e.getLocalDBString());
+                });
             }
             return false;
         }

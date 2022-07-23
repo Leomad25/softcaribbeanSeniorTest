@@ -1,6 +1,8 @@
 package com.leomad25.messageStore.models;
 
-public class UserModel {
+import com.leomad25.messageStore.repositories.LocalDatabaseModel;
+
+public class UserModel implements LocalDatabaseModel {
     private long cedula;
     private String nombre, apellido;
 
@@ -35,5 +37,25 @@ public class UserModel {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    @Override
+    public String getLocalDBString() {
+        try {
+            String str = "";
+            str += getCedula();
+            str += "/:/";
+            str += getNombre();
+            str += "/:/";
+            str += getApellido();
+            return str;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public void setOfDatabase(String localDBString) {
+
     }
 }
