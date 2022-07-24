@@ -14,17 +14,17 @@ public class MessageController {
     private MessageService service;
 
     @GetMapping
-    public MessageModel getMessage(@RequestBody long cedula) {
+    public MessageModel getMessage(@RequestParam long cedula) {
         return service.get(cedula);
     }
 
     @PostMapping
-    public String addMessage(@RequestBody long cedula, @RequestBody String message) {
+    public String addMessage(@RequestParam long cedula, @RequestBody String message) {
         return service.add(cedula, message);
     }
 
     @DeleteMapping
-    public String deleteMessage(@RequestBody long cedula) {
+    public String deleteMessage(@RequestParam long cedula) {
         return service.delete(cedula);
     }
 }

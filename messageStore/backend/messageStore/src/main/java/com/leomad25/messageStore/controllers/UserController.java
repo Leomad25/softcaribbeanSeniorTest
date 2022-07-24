@@ -14,17 +14,17 @@ public class UserController {
     private UserService service;
 
     @GetMapping
-    public UserModel getUser(@RequestBody long cedula) {
+    public UserModel getUser(@RequestParam long cedula) {
         return service.get(cedula);
     }
 
     @PostMapping
-    public String addUser(@RequestBody UserModel user) {
+    public String addUser(@RequestParam UserModel user) {
         return service.add(user);
     }
 
     @DeleteMapping
-    public String deleteUser(@RequestBody long cedula) {
+    public String deleteUser(@RequestParam long cedula) {
         return service.delete(cedula);
     }
 }

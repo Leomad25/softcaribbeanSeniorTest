@@ -1,0 +1,10 @@
+<p>user works!</p>
+<section class="form-users">
+    <input type="number" [(ngModel)] = "user.cedula" placeholder="Cedula">
+    <br>
+    <input type="text" [(ngModel)] = "user.nombre" placeholder="Nombre">
+    <br>
+    <input type="text" [(ngModel)] = "user.apellido" placeholder="Apellido">
+    <br>
+    <button (click)="getUser();">Search</button>
+</section>
