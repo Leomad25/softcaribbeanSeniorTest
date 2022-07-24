@@ -14,17 +14,30 @@ public class UserController {
     private UserService service;
 
     @GetMapping
-    public UserModel getUser(@RequestParam long cedula) {
-        return service.get(cedula);
+    public UserModel getUser(@RequestParam String cedula) {
+        long cedulaLong = -1;
+        try { cedulaLong = Long.valueOf(cedula); } catch (Exception ex) { return null; }
+        if (cedulaLong > 0) return service.get(cedulaLong);
+        return null;
     }
 
     @PostMapping
-    public String addUser(@RequestParam UserModel user) {
-        return service.add(user);
+    public UserModel addUser(@RequestParam String cedula, @RequestParam String nombre, @RequestParam String apellido) {
+        long cedulaLong = -1;
+        try { cedulaLong = Long.valueOf(cedula); } catch (Exception ex) { return null; }
+        if (nombre == "") nombre = "Sin Nombre";
+        if (apellido == "") apellido = "Sin Apellido";
+        UserModel user = new UserModel(cedulaLong, nombre, apellido);
+        String result = service.add(user);
+        if (result.equals("User Inserted") || result.equals("User updated")) return service.get(cedulaLong);
+        return null;
     }
 
     @DeleteMapping
-    public String deleteUser(@RequestParam long cedula) {
-        return service.delete(cedula);
+    public void deleteUser(@RequestParam String cedula) {
+        long cedulaLong = -1;
+        try { cedulaLong = Long.valueOf(cedula); } catch (Exception ex) { return; }
+        if (cedulaLong > 0) service.delete(cedulaLong);
+        return;
     }
 }
