@@ -65,7 +65,7 @@ public class LocalDatabase {
             }
         }
 
-        public ArrayList<T> getList(T newModel) {
+        public ArrayList<T> getList(T modelBase) {
             ArrayList<T> arr = new ArrayList<>();
             if (info != null && data != null) {
                 try {
@@ -73,8 +73,8 @@ public class LocalDatabase {
                     String line;
                     while ((line = bufferedReader.readLine ()) != null) {
                         if (line.length() == 0) continue;
-                        newModel = (T) newModel.setOfDatabase(line);
-                        arr.add(newModel);
+                        T newModel = (T) modelBase.setOfDatabase(line);
+                        if (newModel != null) arr.add(newModel);
                     }
                     bufferedReader.close();
                 } catch (Exception ex) {

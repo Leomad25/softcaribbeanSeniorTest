@@ -44,9 +44,9 @@ public class UserModel implements LocalDatabaseModel<UserModel> {
         try {
             String str = "";
             str += getCedula();
-            str += "\t\t";
+            str += "\t";
             str += getNombre();
-            str += "\t\t";
+            str += "\t";
             str += getApellido();
             return str;
         } catch (Exception ex) {
@@ -56,19 +56,14 @@ public class UserModel implements LocalDatabaseModel<UserModel> {
 
     @Override
     public UserModel setOfDatabase(String localDBString) {
-        String[] arr = localDBString.split("\t\t");
-        return new UserModel(Long.valueOf(arr[0]).longValue(), arr[1], arr[2]);
+        try {
+            String[] arr = localDBString.split("\t");
+            return new UserModel(Long.valueOf(arr[0]).longValue(), arr[1], arr[2]);
+        } catch (Exception ex) {
+            System.err.println("Error -> caught bug (Create obj type UserModel):\n\t" + ex.toString());
+            return null;
+        }
     }
-
-    /*
-    @Override
-    public void setOfDatabase(String localDBString) {
-        String[] arr = localDBString.split("\t\t");
-        setCedula(Long.valueOf(arr[0]).longValue());
-        setNombre(arr[1]);
-        setApellido(arr[2]);
-    }
-    */
 
     @Override
     public long getIdentifier() {

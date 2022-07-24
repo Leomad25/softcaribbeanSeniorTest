@@ -48,17 +48,23 @@ public class MessageModel implements LocalDatabaseModel {
 
     @Override
     public MessageModel setOfDatabase(String localDBString) {
-        String[] arr = localDBString.split("\t\t");
-        ArrayList<String> messagesList = new ArrayList<>();
-        if (arr.length >= 2)  {
-            boolean isFirst = true;
-            for (String msg: arr) {
-                if (!isFirst) {
-                    message.add(msg);
-                } else isFirst = false;
+        try {
+            String[] arr = localDBString.split("\t");
+            ArrayList<String> messagesList = new ArrayList<>();
+            if (arr.length >= 2)  {
+                boolean isFirst = true;
+                for (String msg: arr) {
+                    if (!isFirst) {
+                        message.add(msg);
+                    } else isFirst = false;
+                }
             }
+            return new MessageModel(Long.valueOf(arr[0]).longValue(), messagesList);
+        } catch (Exception ex) {
+            System.err.println("Error -> caught bug (Create obj type MessageModel):\n\t" + ex.toString());
+            return null;
         }
-        return new MessageModel(Long.valueOf(arr[0]).longValue(), messagesList);
+
     }
 
     @Override

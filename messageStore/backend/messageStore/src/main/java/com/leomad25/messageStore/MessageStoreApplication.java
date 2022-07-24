@@ -3,6 +3,7 @@ package com.leomad25.messageStore;
 import com.leomad25.messageStore.lib.BPlusTree.MessageBPlusTree;
 import com.leomad25.messageStore.lib.BPlusTree.UserBPlusTree;
 import com.leomad25.messageStore.lib.LocalDatabase;
+import com.leomad25.messageStore.models.MessageModel;
 import com.leomad25.messageStore.models.UserModel;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,15 +21,21 @@ public class MessageStoreApplication {
 		// BPlusTree
 		MessageStoreApplication.bPlusTreeUser = new UserBPlusTree(100);
 		MessageStoreApplication.bPlusTreeMessage = new MessageBPlusTree(100);
-		// Local Database
+		// Local database
 		MessageStoreApplication.localDatabase = new LocalDatabase();
+		// Load from local database
+		ArrayList<UserModel> listUsers = MessageStoreApplication.localDatabase.getUserTable().getList(new UserModel());
+		ArrayList<MessageModel> listMessages = MessageStoreApplication.localDatabase.getMessageTable().getList(new MessageModel());
+		if (listUsers.size() > 0) listUsers.forEach((e) -> { MessageStoreApplication.bPlusTreeUser.insert(e.getCedula(), e); });
+		if (listMessages.size() > 0) listMessages.forEach((e) -> { MessageStoreApplication.bPlusTreeMessage.insert(e.getCedula(), e); });
 
 		/**
-		 * ===================================
-		 *  Datos de prueba para arbol B plus
-		 * ===================================
+		 * =================
+		 *  DATOS DE PRUEBA
+		 * =================
 		 */
 		/*
+		//Generate Ramdoms UsersModels
 		ArrayList<Long> cedulas = new ArrayList<>();
 		long topNum = 0;
 		for (int i = 0; i < 6000; i++) {
@@ -54,17 +61,26 @@ public class MessageStoreApplication {
 				}
 			}
 		}
+		*/
+		/*
+		// insert to B Tree
 		//System.out.println("Number Top => " + topNum);
 		for (int i = 0; i < cedulas.size(); i++) {
 			UserModel user = new UserModel(cedulas.get(i).longValue(), "Nombre " + i, "Apellido " + i);
 			MessageStoreApplication.bPlusTreeUser.insert(user.getCedula(), user);
 		}
-		MessageStoreApplication.bPlusTreeUser.search(0L, topNum).forEach((e) -> {
+		*/
+		/*
+		// Print of B tree
+		MessageStoreApplication.bPlusTreeUser.search(Long.MIN_VALUE, Long.MAX_VALUE).forEach((e) -> {
 			System.out.println(e.getCedula());
 		});
-		 */
-		//MessageStoreApplication.localDatabase.getUserTable().update(MessageStoreApplication.bPlusTreeUser.search(Long.MIN_VALUE, Long.MAX_VALUE));
+		*/
+		/*
+		// update to local database;
+		MessageStoreApplication.localDatabase.getUserTable().update(MessageStoreApplication.bPlusTreeUser.search(Long.MIN_VALUE, Long.MAX_VALUE));
 		ArrayList<UserModel> listLocalDatabase = MessageStoreApplication.localDatabase.getUserTable().getList(new UserModel());
 		listLocalDatabase.forEach((e) -> { System.out.println(e.getCedula() + ", " + e.getNombre() + " " + e.getApellido()); });
+		*/
 	}
 }
