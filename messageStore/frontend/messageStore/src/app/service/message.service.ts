@@ -8,18 +8,22 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class MessageService {
-  url : String = environment.url + 'message/';
+  url : String = environment.url + 'message';
   constructor(private http: HttpClient) {}
   // call method get
-  getUser(key: Number) : Observable<messageModel> {
-    return this.http.get<messageModel>(`${this.url}${key}`);
+  getMessage(cedula: Number) : Observable<messageModel> {
+    return this.http.get<messageModel>(`${this.url}?cedula=${cedula}`);
   }
   // call method post
-  addUser(data: messageModel) : Observable<String> {
-    return this.http.post<String>(`${this.url}`, data);
+  addMessage(cedula: Number, message: String) : Observable<messageModel> {
+    return this.http.post<messageModel>(`${this.url}?cedula=${cedula}&message=${message}`, {});
   }
   // call method delete
-  deleteUser(key: Number) : Observable<String> {
-    return this.http.delete<String>(`${this.url}${key}`);
+  deleteMessage(cedula: Number, pos: Number) : Observable<void> {
+    return this.http.delete<void>(`${this.url}?cedula=${cedula}&pos=${pos}`);
+  }
+
+  deleteAllMessage(cedula: Number) : Observable<void> {
+    return this.http.delete<void>(`${this.url}?cedula=${cedula}&pos=-a`);
   }
 }

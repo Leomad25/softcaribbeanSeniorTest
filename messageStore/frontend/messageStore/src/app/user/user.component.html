@@ -19,6 +19,6 @@
         </form>
     </section>
     <section class="form-message" *ngIf="!hiddenMessage">
-        <app-message></app-message>
+        <app-message [cedula]="user.cedula"></app-message>
     </section>
 </article>
