@@ -80,7 +80,6 @@ public class LocalDatabase {
                 } catch (Exception ex) {
                     System.err.println("Error (Read into local database):\n" + ex);
                 }
-
             }
             return arr;
         }

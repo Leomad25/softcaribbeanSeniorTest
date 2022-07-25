@@ -24,10 +24,31 @@ public class MessageService {
             return "Message updated";
         }
     }
+
     public String delete(long cedula) {
         if (MessageStoreApplication.bPlusTreeMessage.search(cedula) != null) {
             MessageStoreApplication.bPlusTreeMessage.delete(cedula);
             MessageStoreApplication.localDatabase.getMessageTable().update(MessageStoreApplication.bPlusTreeMessage.search(Long.MIN_VALUE, Long.MAX_VALUE));
+            return "Message deleted";
+        } else {
+            return "Message doesn't exists";
+        }
+    }
+
+    public String delete(long cedula, int pos) {
+        if (MessageStoreApplication.bPlusTreeMessage.search(cedula) != null) {
+            ArrayList<String> list = MessageStoreApplication.bPlusTreeMessage.search(cedula).getMessage();
+            if (list.size() == 1) {
+                MessageStoreApplication.bPlusTreeMessage.delete(cedula);
+                MessageStoreApplication.localDatabase.getMessageTable().update(MessageStoreApplication.bPlusTreeMessage.search(Long.MIN_VALUE, Long.MAX_VALUE));
+            } else {
+                if (pos > 0 || pos < list.size()) {
+                    list.remove(pos);
+                    MessageStoreApplication.bPlusTreeMessage.delete(cedula);
+                    MessageStoreApplication.bPlusTreeMessage.insert(cedula, new MessageModel(cedula, list));
+                    MessageStoreApplication.localDatabase.getMessageTable().update(MessageStoreApplication.bPlusTreeMessage.search(Long.MIN_VALUE, Long.MAX_VALUE));
+                } else return "Message not found";
+            }
             return "Message deleted";
         } else {
             return "Message doesn't exists";

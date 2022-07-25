@@ -22,6 +22,7 @@ export class UserComponent implements OnInit {
   public hiddenBtnDeleteUser:boolean = true;
   public hiddenBtnGetMessage:boolean = true;
   public hiddenInputs:boolean = true;
+  public hiddenMessage:boolean = true;
 
   // Labels
   public labelsBtnUser:String = "";
@@ -45,6 +46,7 @@ export class UserComponent implements OnInit {
       this.user.apellido = null;
       this.hiddenBtnDeleteUser = true;
       this.hiddenBtnGetMessage = true;
+      this.hiddenMessage = true;
       if (response) {
         this.user.nombre = response.nombre;
         this.user.apellido = response.apellido;
@@ -74,5 +76,9 @@ export class UserComponent implements OnInit {
     this.userService.deleteUser(this.user.cedula).subscribe((response) => {
       this.searchUser();
     });
+  }
+
+  getMessage():void {
+    this.hiddenMessage = false;
   }
 }

@@ -51,15 +51,13 @@ public class MessageModel implements LocalDatabaseModel {
         try {
             String[] arr = localDBString.split("\t");
             ArrayList<String> messagesList = new ArrayList<>();
-            if (arr.length >= 2)  {
-                boolean isFirst = true;
-                for (String msg: arr) {
-                    if (!isFirst) {
-                        message.add(msg);
-                    } else isFirst = false;
-                }
+            long cedula = Long.MIN_VALUE;
+            for (String element: arr) {
+                if (cedula == Long.MIN_VALUE) {
+                    try { cedula = Long.valueOf(element).longValue(); } catch (Exception ex) { return null; }
+                } else messagesList.add(element);
             }
-            return new MessageModel(Long.valueOf(arr[0]).longValue(), messagesList);
+            return new MessageModel(cedula, messagesList);
         } catch (Exception ex) {
             System.err.println("Error -> caught bug (Create obj type MessageModel):\n\t" + ex.toString());
             return null;

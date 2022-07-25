@@ -1,19 +1,24 @@
-<section class="form-users">
-    <form [formGroup]="formUser">
-        <section>
-            <input type="number" [(ngModel)]="user.cedula" placeholder="Cedula" formControlName="cedula" (keyup)="searchUser()">
-        </section>
-        <section *ngIf="!hiddenInputs">
-            <input type="text" formControlName="nombre" placeholder="Nombre" [(ngModel)]="user.nombre">
-            <br>
-            <input type="text" formControlName="apellido" Placeholder="Apellido" [(ngModel)]="user.apellido">
-        </section>
-        <section>
-            <button *ngIf="!hiddenBtnUser" (click)="addUser()">{{labelsBtnUser}}</button>
-            <button *ngIf="!hiddenBtnDeleteUser" (click)="deleteUser()">Borrar usuario</button>
-        </section>
-        <section *ngIf="!hiddenBtnGetMessage">
-            <button>Abir mensages</button>
-        </section>
-    </form>
-</section>
+<article>
+    <section class="form-user">
+        <form [formGroup]="formUser">
+            <section>
+                <input type="number" [(ngModel)]="user.cedula" placeholder="Cedula" formControlName="cedula" (keyup)="searchUser()">
+            </section>
+            <section *ngIf="!hiddenInputs">
+                <input type="text" formControlName="nombre" placeholder="Nombre" [(ngModel)]="user.nombre">
+                <br>
+                <input type="text" formControlName="apellido" Placeholder="Apellido" [(ngModel)]="user.apellido">
+            </section>
+            <section>
+                <button *ngIf="!hiddenBtnUser" (click)="addUser()">{{labelsBtnUser}}</button>
+                <button *ngIf="!hiddenBtnDeleteUser" (click)="deleteUser()">Borrar usuario</button>
+            </section>
+            <section *ngIf="!hiddenBtnGetMessage">
+                <button (click)="getMessage()">Abir mensages</button>
+            </section>
+        </form>
+    </section>
+    <section class="form-message" *ngIf="!hiddenMessage">
+        <app-message></app-message>
+    </section>
+</article>
