@@ -81,4 +81,9 @@ export class UserComponent implements OnInit {
   getMessage():void {
     this.hiddenMessage = false;
   }
+
+  changeToMessageWindow():void {
+    document.getElementsByClassName('form-user')[0].classList.add('form-user-up');
+    document.getElementsByClassName('panel-message')[0].classList.add('panel-message-up');
+  }
 }

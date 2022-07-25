@@ -66,4 +66,9 @@ export class MessageComponent implements OnInit {
       this.getMessage();
     });
   }
+
+  changeToUserWindow():void {
+    document.getElementsByClassName('form-user')[0].classList.remove('form-user-up');
+    document.getElementsByClassName('panel-message')[0].classList.remove('panel-message-up');
+  }
 }

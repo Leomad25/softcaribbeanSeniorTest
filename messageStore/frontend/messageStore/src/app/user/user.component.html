@@ -4,21 +4,23 @@
             <section>
                 <input type="number" [(ngModel)]="user.cedula" placeholder="Cedula" formControlName="cedula" (keyup)="searchUser()">
             </section>
-            <section *ngIf="!hiddenInputs">
+            <section *ngIf="!hiddenInputs" class="names-inputs">
                 <input type="text" formControlName="nombre" placeholder="Nombre" [(ngModel)]="user.nombre">
                 <br>
                 <input type="text" formControlName="apellido" Placeholder="Apellido" [(ngModel)]="user.apellido">
             </section>
-            <section>
-                <button *ngIf="!hiddenBtnUser" (click)="addUser()">{{labelsBtnUser}}</button>
-                <button *ngIf="!hiddenBtnDeleteUser" (click)="deleteUser()">Borrar usuario</button>
-            </section>
-            <section *ngIf="!hiddenBtnGetMessage">
-                <button (click)="getMessage()">Abir mensages</button>
+            <section class="buttons">
+                <section class="user-btns">
+                    <button *ngIf="!hiddenBtnUser" (click)="addUser()">{{labelsBtnUser}}</button>
+                    <button *ngIf="!hiddenBtnDeleteUser" (click)="deleteUser()">Borrar usuario</button>
+                </section>
+                <section *ngIf="!hiddenBtnGetMessage" class="menssage-btns">
+                    <button (click)="getMessage(); changeToMessageWindow();">Abir mensages</button>
+                </section>
             </section>
         </form>
     </section>
-    <section class="form-message" *ngIf="!hiddenMessage">
-        <app-message [cedula]="user.cedula"></app-message>
+    <section class="panel-message">
+        <app-message [cedula]="user.cedula" *ngIf="!hiddenMessage"></app-message>
     </section>
 </article>

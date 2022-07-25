@@ -1,16 +1,19 @@
 <section class="message-panel">
-    <section>
-        <p>Cedula: </p>
-        <p>{{cedula.toString()}}</p>
+    <section class="btn-back-user">
+        <button (click)="changeToUserWindow()">Regresar a usuarios</button>
     </section>
-    <section>
+    <section class="cedula-panel">
+        <span>Cedula: </span>
+        <span>{{cedula.toString()}}</span>
+    </section>
+    <section class="btn-delete-all">
         <button (click)="deleteAll()">Eliminar todos los mensages</button>
     </section>
     <form [formGroup]="formMessage">
         <input type="text" placeholder="Mensage" [(ngModel)]="messageModel.message" formControlName="message">
         <button (click)="addMessage()">Agregar</button>
     </form>
-    <section *ngIf="!hiddenMessageItems">
+    <section *ngIf="!hiddenMessageItems" class="message-list">
         <ul>
             <li *ngFor="let message of messageList" (click)="delete(message.index)">{{message.msg}}</li>
         </ul>

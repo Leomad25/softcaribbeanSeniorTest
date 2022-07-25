@@ -1,1 +1,249 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    transition: all .5s;
+}
+
+body {
+    background: linear-gradient(200deg, rgba(255,255,255,1) 0%, rgba(0,129,255,1) 100%);
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+
+    article {
+
+    }
+
+    .form-user-up {
+        transform: translateY(-100%);
+    }
+
+    .form-user {
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        position: absolute;
+        z-index: 10;
+
+        input {
+            background-color: rgba(0, 0, 0, 0);
+            border: 0;
+            border-bottom: 2px solid black;
+            text-align:center;
+            padding-top: .5rem;
+            padding-bottom: .5rem;
+            font-size: 1.5rem;
+        }
+
+        input:hover {
+            background-color: rgba(255, 255, 255, .5);
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            appearance: none;
+        }
+
+        form {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            background-color: rgba(255, 255, 255, .5);
+            padding: 1rem;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 600px;
+            
+
+            * {
+                width: 100%;
+                text-align: center;
+            }
+
+            .names-inputs {
+                input {
+                    width: 80%;
+                    margin-top: .5rem;
+                }
+            }
+
+            button {
+                border: 0;
+                border-radius: 25px;
+                height: 2rem;
+                background-color: rgb(255, 255, 255);
+                font-size: 1.2rem;
+                font-style: italic;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: rgba(255, 255, 255, .8);
+                font-size: 1.5rem;
+            }
+
+            .buttons {
+                margin-top: 1rem;
+                width: 100%;
+
+                .user-btns {
+                    width: 100%;
+                    margin-bottom: .5rem;
+
+                    button {
+                        width: 45%;
+                    }
+                }
+            }
+        }
+    }
+
+    .panel-message-up {
+        transform: translateY(-100%);
+    }
+
+    .panel-message {
+        width: 100vw;
+        height: 100vh;
+        top: 100%;
+        left: 0;
+        position: absolute;
+        overflow: hidden;
+
+        .message-panel {
+            top: 50%;
+            left: 50%;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            background-color: rgba(255, 255, 255, .5);
+            position: absolute;
+            transform: translateY(-50%) translateX(-50%);
+            padding: 1rem;
+            border-radius: 25px;
+            overflow-y: auto;
+
+            * {
+                text-align: center;
+            }
+
+            .btn-back-user {
+                width: 100%;
+                margin-bottom: .5rem;
+                text-align: left;
+                
+                button {
+                    border: 0;
+                    border-radius: 25px;
+                    height: 2rem;
+                    background-color: rgb(255, 255, 255);
+                    font-size: 1.2rem;
+                    font-style: italic;
+                    cursor: pointer;
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                }
+
+                button:hover {
+                    background-color: rgba(255, 255, 255, .8);
+                    font-size: 1.5rem;
+                }
+            }
+
+            .cedula-panel {
+                text-align: right;
+                margin-right: 1rem;
+                font-size: 1.2rem;
+                border-bottom: 2px solid white;
+                margin-bottom: .5rem;
+            }
+
+            .btn-delete-all {
+                text-align: right;
+                margin-bottom: .5rem;
+
+                button {
+                    border: 0;
+                    border-radius: 25px;
+                    height: 2rem;
+                    background-color: rgb(255, 255, 255);
+                    font-size: 1.2rem;
+                    font-style: italic;
+                    cursor: pointer;
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                }
+
+                button:hover {
+                    background-color: rgba(255, 255, 255, .8);
+                    font-size: 1.5rem;
+                }
+            }
+
+            form {
+                width: 100%;
+                display: flex;
+                margin-bottom: .5rem;
+
+                input {
+                    background-color: rgba(0, 0, 0, 0);
+                    border: 0;
+                    border-bottom: 2px solid black;
+                    text-align:center;
+                    width: 100%;
+                    margin-right: 1rem;
+                }
+        
+                input:hover {
+                    background-color: rgba(255, 255, 255, .5);
+                }
+
+                button {
+                    border: 0;
+                    border-radius: 25px;
+                    height: 2rem;
+                    background-color: rgb(255, 255, 255);
+                    font-size: 1.2rem;
+                    font-style: italic;
+                    cursor: pointer;
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                }
+
+                button:hover {
+                    background-color: rgba(255, 255, 255, .8);
+                    font-size: 1.5rem;
+                }
+            }
+
+            .message-list {
+                margin-top: 1rem;
+                border-top: 2px solid white;
+
+                ul {
+                    list-style: none;
+                    
+                    li {
+                        background-color: rgba(255, 255, 255, .5);
+                        margin-top: .2rem;
+                        font-size: 1.2rem;
+                        cursor: pointer;
+
+                        * {
+                            cursor: pointer;
+                        }
+                    }
+
+                    li:hover {
+                        background-color: rgba(255, 100, 100, .5);
+                    }
+                }
+            }
+        }
+    }
+}
